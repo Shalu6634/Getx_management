@@ -1,49 +1,70 @@
-import 'package:adv_flutter_ch8/counter_app/controller/counter_controller.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
-class CounterPage extends StatelessWidget {
-  const CounterPage({super.key});
+import '../controller/counter_controller.dart';
 
+class HomePage extends StatelessWidget {
+  final CounterController counterController = Get.find();
 
   @override
   Widget build(BuildContext context) {
-    //create object of controller class
-    CounterController controller = Get.put(CounterController());
     return Scaffold(
+      // backgroundColor: Colors.white,
       appBar: AppBar(
-        elevation: 8,
-        shadowColor: Colors.black54,
-        backgroundColor: Colors.blue,
         centerTitle: true,
+        leading: InkWell(
+          onTap: () {
+            Get.back();
+          },
+          child: Icon(Icons.arrow_back_ios),
+        ),
         title: Text(
-          'Counter App',
-          style: TextStyle(color: Colors.white),
+          'Theme Change',
+          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
         ),
         actions: [
-          // Switch(
-          //   value:,
-          //   onChanged: (value) {
-          //     controller.changeTheme();
-          //   },
-          // ),
+          ElevatedButton(
+            onPressed: counterController.themeChange,
+            child: Text('Change Theme'),
+          ),
         ],
       ),
       body: Center(
-          child: Obx(
-        () => Text(
-          '${controller.count.value}',
-          style: TextStyle(fontSize: 30),
+        child: Obx(
+          () => Text(
+            '${counterController.count.value}',
+            style: TextStyle(fontSize: 40),
+          ),
         ),
-      )),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.blue,
-        onPressed: () {
-          controller.increment();
-        },
-        child: Icon(
-          Icons.add,
-          color: Colors.white,
+      ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.all(38.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            FloatingActionButton(
+              backgroundColor: Theme.of(context).colorScheme.secondary,
+              onPressed: () {
+                counterController.decrement();
+              },
+              child: Icon(
+                Icons.remove,
+                color: Colors.white,
+              ),
+            ),
+            FloatingActionButton(
+              backgroundColor: Theme.of(context).colorScheme.secondary,
+              onPressed: () {
+                counterController.increment();
+              },
+              child: Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+            ),
+          ],
         ),
       ),
     );

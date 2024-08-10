@@ -1,32 +1,45 @@
 import 'package:adv_flutter_ch8/counter_app/controller/counter_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'counter_app/view/counter_page.dart';
+import 'counter_app/view/secondPage.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final CounterController counterController = Get.put(CounterController());
 
   @override
   Widget build(BuildContext context) {
-    CounterController controller = Get.put(CounterController());
-    //return  GetMaterialApp
-    return GetMaterialApp(
-
-      darkTheme: ThemeData.light(),
-     theme: controller.isDark.value ? ThemeData.dark() : ThemeData.light(),
-      debugShowCheckedModeBanner: false,
-      //Using getPages method for multiple page
-      getPages: [
-        GetPage(
-          name: '/',
-          page: () => CounterPage(),
+    return Obx(() {
+      return GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        darkTheme: ThemeData(
+            colorScheme: ColorScheme.dark(
+          primary: Colors.teal,
+          secondary: Colors.teal,
+        )),
+        theme: ThemeData(
+          colorScheme: ColorScheme.light(
+            primary: Colors.black,
+            secondary: Colors.teal,
+          ),
         ),
-      ],
-    );
+        themeMode:
+            counterController.isDark.value ? ThemeMode.dark : ThemeMode.light,
+        getPages: [
+          GetPage(
+              name: '/',
+              page: () => FirstPage(),
+              transition: Transition.rightToLeft),
+          GetPage(
+              name: '/second',
+              page: () => HomePage(),
+              transition: Transition.leftToRight),
+        ],
+      );
+    });
   }
 }

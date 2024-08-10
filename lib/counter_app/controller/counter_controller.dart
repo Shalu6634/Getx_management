@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CounterController extends GetxController {
@@ -9,8 +10,11 @@ class CounterController extends GetxController {
   void increment() {
     count++;
   }
-
-  void changeTheme() {
-    isDark.value = isDark.value;
+  void decrement() {
+    count--;
+  }
+  void themeChange() {
+    isDark.value = !isDark.value;
+    Get.changeTheme(isDark.value ? ThemeData.dark() : ThemeData.light());
   }
 }
