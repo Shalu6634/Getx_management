@@ -1,4 +1,5 @@
 import 'package:adv_flutter_ch8/counter_app/controller/counter_controller.dart';
+import 'package:adv_flutter_ch8/employee/view/employee_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'counter_app/view/counter_page.dart';
@@ -13,33 +14,35 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      return GetMaterialApp(
-        debugShowCheckedModeBanner: false,
-        darkTheme: ThemeData(
-            colorScheme: ColorScheme.dark(
-          primary: Colors.teal,
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      darkTheme: ThemeData(
+          colorScheme: ColorScheme.dark(
+        primary: Colors.teal,
+        secondary: Colors.teal,
+      )),
+      theme: ThemeData(
+        colorScheme: ColorScheme.light(
+          primary: Colors.black,
           secondary: Colors.teal,
-        )),
-        theme: ThemeData(
-          colorScheme: ColorScheme.light(
-            primary: Colors.black,
-            secondary: Colors.teal,
-          ),
         ),
-        themeMode:
-            counterController.isDark.value ? ThemeMode.dark : ThemeMode.light,
-        getPages: [
-          GetPage(
-              name: '/',
-              page: () => FirstPage(),
-              transition: Transition.rightToLeft),
-          GetPage(
-              name: '/second',
-              page: () => HomePage(),
-              transition: Transition.leftToRight),
-        ],
-      );
-    });
+      ),
+      themeMode:
+          counterController.isDark.value ? ThemeMode.dark : ThemeMode.light,
+      getPages: [
+        GetPage(
+            name: '/first',
+            page: () => FirstPage(),
+            transition: Transition.rightToLeft),
+        GetPage(
+            name: '/second',
+            page: () => HomePage(),
+            transition: Transition.leftToRight),
+        GetPage(
+            name: '/',
+            page: () => EmployeeScreen(),
+            transition: Transition.leftToRight),
+      ],
+    );
   }
 }
